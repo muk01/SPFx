@@ -1,11 +1,12 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
   "solution": {
-    "name": "sp-fx-demo-client-side-solution",
+    "name": "spfxdemo-client-side-solution",
     "id": "d1448226-9c2f-4c7e-a033-997255b19590",
     "version": "1.0.0.0",
     "includeClientSideAssets": true,
-    "isDomainIsolated": false
+    "isDomainIsolated": false,
+    "skipFeatureDeployment": true
   },
   "paths": {
     "zippedPackage": "solution/sp-fx-demo.sppkg"
