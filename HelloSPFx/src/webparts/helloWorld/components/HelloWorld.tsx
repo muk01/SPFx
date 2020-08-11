@@ -144,4 +144,31 @@ export default class HelloWorld extends React.Component<IHelloWorldProps, IHello
     });  
   }   
   
+  private getMaxId(): Promise<number>{
+    return new Promise<number>((resolve: (itemId:number) => void, reject: (error: any) => void): void =>
+    {
+      this.props.spHttpClient.get(`${this.props.siteURL}/_api/web/lists/getbytitle('${this.props.ListName}')/items?$orderby=Id desc&top=1&$select=id`,
+      SPHttpClient.configurations.v1,
+      {
+        headers:{
+          'Accept':'application/json;odata=nometadata',
+          'odataversion':''
+        }
+      })
+      .then((response: SPHttpClientResponse): Promise<{value:{Id: number}[]}> =>{
+        return response.json();
+        },(error: any): void=>{
+        reject(error);
+      })
+      .then((response: { value: { Id: number }[] }): void => {  
+          if (response.value.length === 0) {  
+            resolve(-1);  
+          }  
+          else {  
+            resolve(response.value[0].Id);  
+          }  
+        });  
+    });
+  }
+
 }

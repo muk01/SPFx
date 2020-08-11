@@ -1,3 +1,4 @@
+import { SPHttpClient } from '@microsoft/sp-http';
 import * as React from 'react';
 import * as ReactDom from 'react-dom';
 import { Version } from '@microsoft/sp-core-library';
@@ -12,7 +13,7 @@ import HelloWorld from './components/HelloWorld';
 import { IHelloWorldProps } from './components/IHelloWorldProps';
 
 export interface IHelloWorldWebPartProps {
-  description: string;
+  ListName: string;
 }
 
 export default class HelloWorldWebPart extends BaseClientSideWebPart <IHelloWorldWebPartProps> {
@@ -21,7 +22,9 @@ export default class HelloWorldWebPart extends BaseClientSideWebPart <IHelloWorl
     const element: React.ReactElement<IHelloWorldProps> = React.createElement(
       HelloWorld,
       {
-        description: this.properties.description
+        ListName: this.properties.ListName,
+        spHttpClient: this.context.spHttpClient,
+        siteURL: this.context.pageContext.web.absoluteUrl
       }
     );
 
@@ -47,8 +50,8 @@ export default class HelloWorldWebPart extends BaseClientSideWebPart <IHelloWorl
             {
               groupName: strings.BasicGroupName,
               groupFields: [
-                PropertyPaneTextField('description', {
-                  label: strings.DescriptionFieldLabel
+                PropertyPaneTextField('ListName', {
+                  label: strings.ListNameFieldLabel
                 })
               ]
             }
